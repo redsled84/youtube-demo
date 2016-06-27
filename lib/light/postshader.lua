@@ -52,7 +52,7 @@ local function new()
 end
 
 function post_shader:refreshScreenSize(w, h)
-  w, h = w or love.window.getWidth(), h or love.window.getHeight()
+  w, h = w or love.graphics.getWidth(), h or love.graphics.getHeight()
   self.back_buffer   = love.graphics.newCanvas(w, h)
 end
 
@@ -94,7 +94,7 @@ function post_shader:drawBloom(canvas, args)
   util.process(self.back_buffer, {shader = shaders['blurh'][1]})
   util.process(self.back_buffer, {shader = shaders['contrast'][1]})
   util.process(canvas, {shader = shaders['contrast'][1]})
-  util.drawCanvasToCanvas(self.back_buffer, canvas, {blendmode = "additive", color = {255, 255, 255, (args[2] or 0.25) * 255}})
+  util.drawCanvasToCanvas(self.back_buffer, canvas, {blendmode = "add", color = {255, 255, 255, (args[2] or 0.25) * 255}})
 end
 
 function post_shader:drawBlur(canvas, args)
